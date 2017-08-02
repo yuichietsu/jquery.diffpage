@@ -8,6 +8,10 @@ $(function() {
 		'oldUrl' : 'old.html',
 		'newUrl' : 'new.html'
 	});
+	$('input[name="mode"]').click(function() {
+		var mode = $(this).val();
+		$('#result').diffpage('mode', mode);
+	});
 });
 </script>
 <style>
@@ -21,5 +25,11 @@ div#result
 </head>
 <body>
 	<div id="result"></div>
+<div>
+<label><input type="radio" name="mode" value="all" checked>all</label>
+<label><input type="radio" name="mode" value="old">old</label>
+<label><input type="radio" name="mode" value="new">new</label>
+<label><input type="radio" name="mode" value="diff">diff</label>
+</div>
 </body>
 </html>

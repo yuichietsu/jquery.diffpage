@@ -21,43 +21,92 @@
 	function registerScrollSync(iframe) {
 		$(iframe.contentWindow).scroll(function() { syncScroll(iframe); });
 	}
+
+	var methods = {
+		'init': function(options) {
+			init();
+			var opts = $.extend(true, {}, defaults, options);
+			return this.each(function() {
+				var $this = $(this);
+				var $ifOld = $('<iframe class="diffpageOld" />');
+				var $ifNew = $('<iframe class="diffpageNew" />');
+				var $ifOrg = $('<iframe class="diffpageOrg" />');
+				var $cover = $('<div class="diffpageCover" />');
+				var ifCss = {
+					'position':'absolute',
+					'width': '100%',
+					'height': '100%',
+					'top': '0',
+					'left': '0',
+					'border': 'none',
+				};
+				$this.html('');
+				$this.css({
+					'position' : 'relative',
+					'overflow' : 'hidden'
+				});
+				$ifOld.css($.extend({}, ifCss, {'background-color':'#fff'}));
+				$ifNew.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
+				$ifOrg.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
+				$cover.css(ifCss);
+				$this.append($ifOld);
+				$this.append($ifNew);
+				$this.append($cover);
+				$this.append($ifOrg);
+				$this.children('iframe').on('load', function() {
+					registerScrollSync(this);
+				});
+				$ifOld.attr('src', opts.oldUrl);
+				$ifNew.attr('src', opts.newUrl);
+				$ifOrg.attr('src', opts.newUrl);
+			});
+		},
+		'mode': function(mode) {
+			return this.each(function() {
+				var $this = $(this);
+				var $ifOld = $this.children('.diffpageOld');
+				var $ifNew = $this.children('.diffpageNew');
+				var $ifOrg = $this.children('.diffpageOrg');
+				var $cover = $this.children('.diffpageCover');
+				switch (mode) {
+					case 'old':
+						$ifOld.show();
+						$ifNew.hide();
+						$cover.hide();
+						$ifOrg.hide();
+						break;		
+					case 'new':
+						$ifOld.hide();
+						$ifNew.show();
+						$cover.hide();
+						$ifOrg.hide();
+						break;		
+					case 'diff':
+						$ifOld.show();
+						$ifNew.show();
+						$cover.hide();
+						$ifOrg.hide();
+						break;		
+					default:
+						$ifOld.show();
+						$ifNew.show();
+						$cover.show();
+						$ifOrg.show();
+						break;		
+				}
+			});
+		}	
+	};
 	
-	$.fn.diffpage = function(options) {
-		init();
-		var opts = $.extend(true, {}, defaults, options);
-		return this.each(function() {
-			var $this = $(this);
-			var $ifOld = $('<iframe />');
-			var $ifNew = $('<iframe />');
-			var $ifOrg = $('<iframe />');
-			var $cover = $('<div class="diffpageCover" />');
-			var ifCss = {
-				'position':'absolute',
-				'width': '100%',
-				'height': '100%',
-				'top': '0',
-				'left': '0',
-				'border': 'none',
-			};
-			$this.html('');
-			$this.css({
-				'position' : 'relative',
-				'overflow' : 'hidden'
-			});
-			$ifOld.css($.extend({}, ifCss, {'background-color':'#fff'}));
-			$ifNew.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
-			$ifOrg.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
-			$cover.css(ifCss);
-			$this.append($ifOld);
-			$this.append($ifNew);
-			$this.append($cover);
-			$this.append($ifOrg);
-			$this.children('iframe').on('load', function() {
-				registerScrollSync(this);
-			});
-			$ifOld.attr('src', opts.oldUrl);
-			$ifNew.attr('src', opts.newUrl);
-			$ifOrg.attr('src', opts.newUrl);
-		});
+	$.fn.diffpage = function(method) {
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		}
+		else if (typeof method === 'object' || ! method) {
+			return methods.init.apply(this, arguments);
+		}
+		else {
+			$.error('jQuery.diffpage: Method does not exists');
+		}
 	};
 })(jQuery);
