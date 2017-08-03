@@ -7,7 +7,7 @@
 	function init() {
 		if (! initialized) {
 			initialized = true;
-			$('head').append('<style> .diffpageCover { mix-blend-mode: multiply; background-image: linear-gradient( -45deg, #fff 12.5%, #000 12.5%, #000 25%, #f00 25%, #f00 37.5%, #000 37.5%, #000 50%, #fff 50%, #fff 62.5%, #000 62.5%, #000 75%, #f00 75%, #f00 87.5%, #000 87.5%, #000); background-size: 16px 16px; animation: diffpageAnim 60s linear infinite; } @keyframes diffpageAnim { 0% {background-position: 0 0;} 100% {background-position: 100% 100%;} } </style>');
+			$('head').append('<style> .diffpageCover { mix-blend-mode: multiply; background-image: linear-gradient( -45deg, #fff 25%, #000 25%, #000 50%, #fff 50%, #fff 75%, #000 75%, #000); background-size: 16px 16px; animation: diffpageAnim 60s linear infinite; } @keyframes diffpageAnim { 0% {background-position: 0 0;} 100% {background-position: 100% 100%;} } </style>');
 		}
 	}
 
