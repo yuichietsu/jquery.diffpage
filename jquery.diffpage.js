@@ -2,7 +2,7 @@
 	var defaults = {
 		'stripeType': 'skew',
 		'stripeSize': '16px',	
-		'stripeSpeed': '60s',
+		'stripeDuration': '60s',
 	};
 	var initialized = false;
 
@@ -24,7 +24,7 @@
 		$(iframe.contentWindow).scroll(function() { syncScroll(iframe); });
 	}
 
-	function styleCover($cover, type, size, speed) {
+	function styleCover($cover, type, size, time) {
 		var deg, px, duration;
 		switch (type) {
 			case 'v':
@@ -41,7 +41,7 @@
 				break;
 		}
 		px = size ? size : '16px';
-		duration = speed ? speed : '60s';
+		duration = time ? time : '60s';
 		$cover.css({
 			'mix-blend-mode': 'multiply',
 			'background-image': 'linear-gradient(' + deg + ', #fff 25%, #000 25%, #000 50%, #fff 50%, #fff 75%, #000 75%, #000)',
@@ -77,7 +77,7 @@
 				$ifNew.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
 				$ifOrg.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
 				$cover.css(ifCss);
-				styleCover($cover, opts.stripeType, opts.stripeSize, opts.stripeSpeed);
+				styleCover($cover, opts.stripeType, opts.stripeSize, opts.stripeDuration);
 				$this.append($ifOld);
 				$this.append($ifNew);
 				$this.append($cover);
