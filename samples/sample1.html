@@ -1,27 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
+<meta charset="UTF-8">
+<title>sample1</title>
+<link rel="stylesheet" href="style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="../jquery.diffpage.js"></script>
+<script src="script.js"></script>
 <script>
-$(function() {
-	$('#result').diffpage({
-		'oldUrl' : 'old.html',
-		'newUrl' : 'new.html'
-	});
-	$('input[name="mode"]').click(function() {
-		var mode = $(this).val();
-		$('#result').diffpage('mode', mode);
-	});
-});
+base = 'sample1';
 </script>
-<style>
-div#result
-{
-	border: 1px solid #000;
-	width: 800px;
-	height: 600px;
-}
-</style>
 </head>
 <body>
 	<div id="result"></div>
