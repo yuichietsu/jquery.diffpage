@@ -29,11 +29,11 @@
 		switch (type) {
 			case 'v':
 			case 'vertical':
-				deg = '';
+				deg = '-90deg';
 				break;
 			case 'h':
 			case 'horizontal':
-				deg = '-90deg';
+				deg = '0deg';
 				break;
 			case 'skew':
 			default:
