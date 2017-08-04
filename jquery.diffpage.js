@@ -1,13 +1,15 @@
 (function($) {
 	var defaults = {
-		'control':true
+		'stripeType': 'skew',
+		'stripeSize': '16px',	
+		'stripeSpeed': '60s',
 	};
 	var initialized = false;
 
 	function init() {
 		if (! initialized) {
 			initialized = true;
-			$('head').append('<style> .diffpageCover { mix-blend-mode: multiply; background-image: linear-gradient( -45deg, #fff 25%, #000 25%, #000 50%, #fff 50%, #fff 75%, #000 75%, #000); background-size: 16px 16px; animation: diffpageAnim 60s linear infinite; } @keyframes diffpageAnim { 0% {background-position: 0 0;} 100% {background-position: 100% 100%;} } </style>');
+			$('head').append('<style>@keyframes diffpageAnim { 0% {background-position: 0 0;} 100% {background-position: 100% 100%;} }</style>');
 		}
 	}
 
@@ -20,6 +22,32 @@
 
 	function registerScrollSync(iframe) {
 		$(iframe.contentWindow).scroll(function() { syncScroll(iframe); });
+	}
+
+	function styleCover($cover, type, size, speed) {
+		var deg, px, duration;
+		switch (type) {
+			case 'v':
+			case 'vertical':
+				deg = '';
+				break;
+			case 'h':
+			case 'horizontal':
+				deg = '-90deg';
+				break;
+			case 'skew':
+			default:
+				deg = '-45deg';
+				break;
+		}
+		px = size ? size : '16px';
+		duration = speed ? speed : '60s';
+		$cover.css({
+			'mix-blend-mode': 'multiply',
+			'background-image': 'linear-gradient(' + deg + ', #fff 25%, #000 25%, #000 50%, #fff 50%, #fff 75%, #000 75%, #000)',
+			'background-size': px + ' ' + px,
+			'animation': 'diffpageAnim ' + duration + ' linear infinite'
+		});
 	}
 
 	var methods = {
@@ -49,6 +77,7 @@
 				$ifNew.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
 				$ifOrg.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
 				$cover.css(ifCss);
+				styleCover($cover, opts.stripeType, opts.stripeSize, opts.stripeSpeed);
 				$this.append($ifOld);
 				$this.append($ifNew);
 				$this.append($cover);
