@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>sample3</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../jquery.diffpage.js"></script>
+<script>
+var base = 'sample3';
+$(function() {
+
+	$('#result1').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+	});
+
+	$('#result2').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+		'stripeType': 'horizontal'
+	});
+
+	$('#result3').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+		'stripeType': 'vertical'
+	});
+
+	$('#result4').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+		'stripeType': 'skew',
+		'stripeSize': '8px'
+	});
+
+	$('#result5').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+		'stripeType': 'skew',
+		'stripeSize': '32px'
+	});
+
+	$('#result6').diffpage({
+		'oldUrl' : base + '/old.html',
+		'newUrl' : base + '/new.html',
+		'stripeType': 'skew',
+		'stripeSize': '32px',
+		'stripeDuration': '20s'
+	});
+
+	$('input[name="mode"]').click(function() {
+		var mode = $(this).val();
+		$('.result').diffpage('mode', mode);
+	});
+});
+</script>
+<style>
+.result
+{
+	border: 1px solid #000;
+	width: 100px;
+	height: 100px;
+	margin: auto;
+}
+#wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+#wrapper > div {
+	flex-basis: 150px;
+}
+#wrapper > div > div {
+	text-align: center;
+}
+#control {
+	margin-top: 30px;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<div><div id="result1" class="result"></div><div>default</div></div>
+	<div><div id="result2" class="result"></div><div>stripeType:horizontal</div></div>
+	<div><div id="result3" class="result"></div><div>stripeType:vertical</div></div>
+	<div><div id="result4" class="result"></div><div>stripeType:skew</div><div>stripeSize:8px</div></div>
+	<div><div id="result5" class="result"></div><div>stripeType:skew</div><div>stripeSize:32px</div></div>
+	<div><div id="result6" class="result"></div><div>stripeType:skew</div><div>stripeSize:32px</div><div>stripeDuration:20s</div></div>
+</div>
+<div id="control">
+<label><input type="radio" name="mode" value="all" checked>all</label>
+<label><input type="radio" name="mode" value="old">old</label>
+<label><input type="radio" name="mode" value="new">new</label>
+<label><input type="radio" name="mode" value="diff">diff</label>
+</div>
+</body>
+</html>
