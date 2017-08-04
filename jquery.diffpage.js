@@ -13,15 +13,8 @@
 		}
 	}
 
-	function syncScroll (sender) {
-		var t = $(sender.contentWindow).scrollTop();
-		$(sender).siblings().each(function() {
-			$(this.contentWindow).scrollTop(t);
-		});
-	}
-
-	function registerScrollSync(iframe) {
-		$(iframe.contentWindow).scroll(function() { syncScroll(iframe); });
+	function fitIframeHeight(iframe) {
+		$(iframe).height($(iframe.contentWindow).height());		
 	}
 
 	function styleCover($cover, type, size, time) {
@@ -71,7 +64,7 @@
 				$this.html('');
 				$this.css({
 					'position' : 'relative',
-					'overflow' : 'hidden'
+					'overflow' : 'auto'
 				});
 				$ifOld.css($.extend({}, ifCss, {'background-color':'#fff'}));
 				$ifNew.css($.extend({}, ifCss, {'background-color':'#fff', 'mix-blend-mode':'difference'}));
@@ -83,7 +76,7 @@
 				$this.append($cover);
 				$this.append($ifOrg);
 				$this.children('iframe').on('load', function() {
-					registerScrollSync(this);
+					fitIframeHeight(this);
 				});
 				$ifOld.attr('src', opts.oldUrl);
 				$ifNew.attr('src', opts.newUrl);
